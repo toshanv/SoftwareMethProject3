@@ -9,13 +9,27 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller {
-    ObservableList <String> list = FXCollections.observableArrayList("Fulltime", "Parttime", "Management");
+    ObservableList <String> employmentStatusList = FXCollections.observableArrayList("Fulltime", "Parttime", "Management");
+
+    ObservableList <String> departmentList = FXCollections.observableArrayList("CS", "IT", "ECE");
+
+    ObservableList <String> managementList = FXCollections.observableArrayList("Manager", "DepartmentHead", "Director");
+
+
     @FXML
-    private ChoiceBox series = new ChoiceBox();
+    private ChoiceBox employmentStatus = new ChoiceBox();
+
+    @FXML
+    private ChoiceBox departmentStatus = new ChoiceBox();
+
+    @FXML
+    private ChoiceBox managementStatus = new ChoiceBox();
 
     @FXML
     public void initialize () {
-        series.getItems().addAll(list);
+        employmentStatus.getItems().addAll(employmentStatusList);
+        departmentStatus.getItems().addAll(departmentList);
+        managementStatus.getItems().addAll(managementList);
     }
 
 }

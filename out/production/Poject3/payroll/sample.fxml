@@ -4,31 +4,61 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="payroll.Controller">
-   <TabPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="payroll.Controller">
+   <TabPane GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <tabs>
-         <Tab>
+         <Tab text="Employee Management">
             <content>
                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="603.0">
                   <children>
                      <Text layoutX="38.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="43.13673400878906" />
                      <TextField layoutX="81.0" layoutY="22.0" />
-                     <TextField alignment="CENTER" layoutX="250.0" layoutY="192.0" />
-                     <Text layoutX="324.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Department:" wrappingWidth="103.13671112060547" />
-                     <CheckBox layoutX="448.0" layoutY="25.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="50.0" text="CS" />
-                     <CheckBox layoutX="448.0" layoutY="60.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="50.0" text="IT" />
-                     <CheckBox layoutX="448.0" layoutY="95.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="50.0" text="ECE" />
+                     <TextField alignment="CENTER" layoutX="131.0" layoutY="141.0" />
+                     <Text layoutX="324.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Department:" wrappingWidth="103.13671112060547" />
                      <DatePicker layoutX="81.0" layoutY="79.0" />
                      <Text layoutX="38.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="37.13671875" />
-                     <Text layoutX="127.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Annual Salary:" wrappingWidth="82.13672637939453" />
-                     <ChoiceBox fx:id="series" layoutX="249.0" layoutY="147.0" prefWidth="150.0" />
-                     <Text layoutX="127.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employment Status:" />
+                     <Text layoutX="40.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Annual Salary:" wrappingWidth="82.13672637939453" />
+                     <ChoiceBox fx:id="employmentStatus" layoutX="438.0" layoutY="71.0" prefWidth="150.0" />
+                     <Text layoutX="323.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employment Status:" />
+                     <ChoiceBox fx:id="departmentStatus" layoutX="438.0" layoutY="22.0" prefWidth="150.0" />
+                     <TextField layoutX="131.0" layoutY="194.0" />
+                     <Text layoutX="40.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Worked:" wrappingWidth="91.13673400878906" />
+                     <Text layoutX="322.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate:" wrappingWidth="74.13671112060547" />
+                     <TextField layoutX="439.0" layoutY="193.0" />
+                     <Text layoutX="322.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Management Role:" wrappingWidth="106.13671875" />
+                     <ChoiceBox fx:id="managementStatus" layoutX="438.0" layoutY="141.0" prefWidth="150.0" />
+                     <ButtonBar layoutX="26.0" layoutY="292.0" prefHeight="40.0" prefWidth="551.0">
+                       <buttons>
+                           <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="283.0" text="Reset" />
+                           <Button mnemonicParsing="false" text="Add Employee" />
+                           <Button mnemonicParsing="false" text="Remove Employee" />
+                         <Button mnemonicParsing="false" text="Set Hours" />
+                       </buttons>
+                     </ButtonBar>
                   </children></AnchorPane>
+            </content>
+         </Tab>
+         <Tab text="Employee Database">
+            <content>
+               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="603.0">
+                  <children>
+                     <VBox prefHeight="200.0" prefWidth="603.0">
+                        <children>
+                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Import" />
+                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Export" />
+                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Print" />
+                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Print By Department" />
+                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Print By Date" />
+                        </children>
+                     </VBox>
+                  </children>
+               </AnchorPane>
             </content>
          </Tab>
       </tabs>
    </TabPane>
    <columnConstraints>
+      <ColumnConstraints />
       <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
