@@ -4,11 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 
+import javax.swing.event.ChangeListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -51,7 +50,7 @@ public class Controller {
         managementStatus.getItems().addAll(managementList);
     }
 
-    public void resetTab(ActionEvent actionEvent) {
+    public void resetTab (ActionEvent actionEvent) {
         name.clear();
         annualSalary.clear();
         hoursWorked.clear();
@@ -60,5 +59,28 @@ public class Controller {
         employmentStatus.setValue(null);
         managementStatus.setValue(null);
         hiredDate.setValue(null);
+    }
+    public int checkHoursWorked () {
+        try {
+            Double checkVal = Double.parseDouble(hoursWorked.getText());
+            //System.out.println("Value of the variable: "+ checkVal);
+            checkVal = Double.parseDouble(annualSalary.getText());
+            checkVal = Double.parseDouble(hourlyRate.getText());
+            return 0;
+        }
+        catch (NumberFormatException ex) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Submission is not valid");
+            errorAlert.setContentText("One of the fields is not a valid type double.");
+            errorAlert.showAndWait();
+            return -1;
+        }
+    }
+    public void handleClickAdd(ActionEvent actionEvent) {
+       int check = checkHoursWorked();
+       if (check == -1) {
+           resetTab(actionEvent);
+           return;
+       }
     }
 }
