@@ -62,10 +62,17 @@ public class Controller {
     }
     public int checkFieldDouble () {
         try {
-            Double checkVal = Double.parseDouble(hoursWorked.getText());
-            //System.out.println("Value of the variable: "+ checkVal);
-            checkVal = Double.parseDouble(annualSalary.getText());
-            checkVal = Double.parseDouble(hourlyRate.getText());
+            Double checkVal;
+            if (hoursWorked.getText().compareTo("")!=0) {
+                checkVal = Double.parseDouble(hoursWorked.getText());
+            }
+            if (annualSalary.getText().compareTo("")!=0) {
+                checkVal = Double.parseDouble(annualSalary.getText());
+            }
+            if (hoursWorked.getText().compareTo("")!=0) {
+                checkVal = Double.parseDouble(hoursWorked.getText());
+            }
+
             return 0;
         }
         catch (NumberFormatException ex) {
