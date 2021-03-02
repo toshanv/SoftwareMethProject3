@@ -60,7 +60,7 @@ public class Controller {
         managementStatus.setValue(null);
         hiredDate.setValue(null);
     }
-    public int checkHoursWorked () {
+    public int checkFieldDouble () {
         try {
             Double checkVal = Double.parseDouble(hoursWorked.getText());
             //System.out.println("Value of the variable: "+ checkVal);
@@ -77,7 +77,7 @@ public class Controller {
         }
     }
     public void handleClickAdd(ActionEvent actionEvent) {
-       int check = checkHoursWorked();
+       int check = checkFieldDouble();
        if (check == -1) {
            resetTab(actionEvent);
            return;
