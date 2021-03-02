@@ -18,7 +18,7 @@
                      <DatePicker fx:id="hiredDate" layoutX="81.0" layoutY="79.0" />
                      <Text layoutX="38.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="37.13671875" />
                      <Text layoutX="40.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Annual Salary:" wrappingWidth="82.13672637939453" />
-                     <ChoiceBox fx:id="employmentStatus" layoutX="438.0" layoutY="71.0" prefWidth="150.0" />
+                     <ChoiceBox fx:id="employmentStatus" layoutX="438.0" layoutY="71.0" onMouseEntered="#handleEmploymentRestrictions" prefWidth="150.0" />
                      <Text layoutX="323.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employment Status:" />
                      <ChoiceBox fx:id="departmentStatus" layoutX="438.0" layoutY="22.0" prefWidth="150.0" />
                      <TextField fx:id="hoursWorked" layoutX="131.0" layoutY="194.0" />

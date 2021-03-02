@@ -1,11 +1,14 @@
 package payroll;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import javax.swing.event.ChangeListener;
 import java.net.URL;
@@ -42,6 +45,7 @@ public class Controller {
 
     @FXML
     private TextField hourlyRate = new TextField();
+
 
     @FXML
     public void initialize () {
@@ -83,6 +87,34 @@ public class Controller {
             return -1;
         }
     }
+    public void handleEmploymentRestrictions(MouseEvent mouseEvent) {
+        if (employmentStatus.getValue() == "Parttime"){
+            annualSalary.setDisable(true);
+            hoursWorked.setDisable(false);
+            hourlyRate.setDisable(false);
+            managementStatus.setDisable(true);
+        }
+        else if (employmentStatus.getValue() == "Fulltime" ) {
+            annualSalary.setDisable(false);
+            hoursWorked.setDisable(true);
+            hourlyRate.setDisable(true);
+            managementStatus.setDisable(true);
+
+
+        }
+        else if (employmentStatus.getValue() == "Management") {
+            annualSalary.setDisable(false);
+            hoursWorked.setDisable(true);
+            hourlyRate.setDisable(true);
+            managementStatus.setDisable(false);
+        }
+        else {
+            annualSalary.setDisable(false);
+            hoursWorked.setDisable(false);
+            hourlyRate.setDisable(false);
+            managementStatus.setDisable(false);
+        }
+    }
     public void handleClickAdd(ActionEvent actionEvent) {
        int check = checkFieldDouble();
        if (check == -1) {
@@ -90,4 +122,5 @@ public class Controller {
            return;
        }
     }
+
 }
