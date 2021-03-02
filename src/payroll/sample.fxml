@@ -9,7 +9,7 @@
       <tabs>
          <Tab text="Employee Management">
             <content>
-               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="603.0">
+               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#handleEmploymentRestrictions" prefHeight="383.0" prefWidth="603.0">
                   <children>
                      <Text layoutX="38.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="43.13673400878906" />
                      <TextField fx:id="name" layoutX="81.0" layoutY="22.0" />
@@ -18,7 +18,7 @@
                      <DatePicker fx:id="hiredDate" layoutX="81.0" layoutY="79.0" />
                      <Text layoutX="38.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="37.13671875" />
                      <Text layoutX="40.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Annual Salary:" wrappingWidth="82.13672637939453" />
-                     <ChoiceBox fx:id="employmentStatus" layoutX="438.0" layoutY="71.0" onMouseEntered="#handleEmploymentRestrictions" prefWidth="150.0" />
+                     <ChoiceBox fx:id="employmentStatus" layoutX="438.0" layoutY="71.0" onMouseClicked="#handleEmploymentRestrictions" onMouseDragged="#handleEmploymentRestrictions" onMouseExited="#handleEmploymentRestrictions" prefWidth="150.0" />
                      <Text layoutX="323.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employment Status:" />
                      <ChoiceBox fx:id="departmentStatus" layoutX="438.0" layoutY="22.0" prefWidth="150.0" />
                      <TextField fx:id="hoursWorked" layoutX="131.0" layoutY="194.0" />

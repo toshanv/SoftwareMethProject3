@@ -64,29 +64,7 @@ public class Controller {
         managementStatus.setValue(null);
         hiredDate.setValue(null);
     }
-    public int checkFieldDouble () {
-        try {
-            Double checkVal;
-            if (hoursWorked.getText().compareTo("")!=0) {
-                checkVal = Double.parseDouble(hoursWorked.getText());
-            }
-            if (annualSalary.getText().compareTo("")!=0) {
-                checkVal = Double.parseDouble(annualSalary.getText());
-            }
-            if (hoursWorked.getText().compareTo("")!=0) {
-                checkVal = Double.parseDouble(hoursWorked.getText());
-            }
 
-            return 0;
-        }
-        catch (NumberFormatException ex) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("One of the fields is not a valid type double.");
-            errorAlert.showAndWait();
-            return -1;
-        }
-    }
     public void handleEmploymentRestrictions(MouseEvent mouseEvent) {
         if (employmentStatus.getValue() == "Parttime"){
             annualSalary.setDisable(true);
@@ -115,12 +93,48 @@ public class Controller {
             managementStatus.setDisable(false);
         }
     }
+
+    public int checkFieldDouble () {
+        try {
+            Double checkVal;
+            if (employmentStatus.getValue() == "Parttime"){
+                checkVal = Double.parseDouble(hourlyRate.getText());
+                checkVal = Double.parseDouble(hoursWorked.getText());
+                return 1;
+            }
+            else if (employmentStatus.getValue() == "Management" || employmentStatus.getValue() == "Fulltime") {
+                checkVal = Double.parseDouble(annualSalary.getText());
+                if (employmentStatus.getValue() == "Management") {
+                    return 3;
+                }
+                else{
+                    return 2;
+                }
+            }
+            else{
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Submission is not valid");
+                errorAlert.setContentText("One of the required fields is empty or is not a valid type double.");
+                errorAlert.showAndWait();
+                return -1;
+            }
+        }
+        catch (NumberFormatException ex) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Submission is not valid");
+            errorAlert.setContentText("One of the required fields is empty or is not a valid type double.");
+            errorAlert.showAndWait();
+            return -1;
+        }
+    }
+
     public void handleClickAdd(ActionEvent actionEvent) {
        int check = checkFieldDouble();
        if (check == -1) {
            resetTab(actionEvent);
            return;
        }
+       System.out.println(check);
     }
 
 }
