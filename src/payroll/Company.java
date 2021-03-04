@@ -210,7 +210,7 @@ public class Company {
         System.out.println("--Printing earning statements by date hired--");
 
         for (int i = 0; i < numEmployee; i++) {
-            System.out.println(emplist[i].toString());
+             System.out.println(emplist[i].toString());
         }
     } 
 
@@ -231,7 +231,7 @@ public class Company {
         }
     }
     
-    /** 
+    /**
      * helper method that sorts each employee in the company by date hired 
      */
     private void sortByDate() {
