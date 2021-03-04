@@ -155,63 +155,71 @@ public class Company {
     /** 
      * method to print each employee in the company in the current order
      */
-    public void print() {
+    public String print() {
+        String output;
         if (this.numEmployee == 0) {
-            System.out.println("Employee database is empty.");
-            return;
+            output = "Employee database is empty.\n";
+            return output;
         }
 
-        System.out.println("--Printing earning statements for all employees--");
+        output = "--Printing earning statements for all employees--\n";
         
         for (Employee emp : emplist) {
             if (emp instanceof Parttime) {
                 Parttime empParttime = (Parttime)emp;
-                System.out.println(empParttime.toString());
+                output = output + (empParttime.toString()) + "\n";
             } else if (emp instanceof Management) {
                 Management empManagement = (Management)emp;
-                System.out.println(empManagement.toString());
+                output = output + (empManagement.toString()) + "\n";
             } else if (emp instanceof Fulltime) {
                 Fulltime empFulltime = (Fulltime)emp;
-                System.out.println(empFulltime.toString());
+                output = output + (empFulltime.toString()) + "\n";
             }
         }
 
+        return output;
     } 
     
     /** 
      * method to print each employee in the company ordered by department 
      */
-    public void printByDepartment() {
+    public String printByDepartment() {
+        String output;
         if (this.numEmployee == 0) {
-            System.out.println("Employee database is empty.");
-            return;
+            output = "Employee database is empty.\n";
+            return output;
         }
 
         sortByDept();
         
-        System.out.println("--Printing earning statements by department--");
+        output = "--Printing earning statements by department--\n";
 
         for (int i = 0; i < numEmployee; i++) {
-            System.out.println(emplist[i].toString());
+            output = output + emplist[i].toString() + "\n";
         }
+
+        return output;
     } 
     
     /** 
      * method to print each employee in the company ordered by date hired 
      */
-    public void printByDate() {
+    public String printByDate() {
+        String output;
         if (this.numEmployee == 0) {
-            System.out.println("Employee database is empty.");
-            return;
+            output = "Employee database is empty.\n";
+            return output;
         }
 
         sortByDate();
 
-        System.out.println("--Printing earning statements by date hired--");
+        output = "--Printing earning statements by date hired--\n";
 
         for (int i = 0; i < numEmployee; i++) {
-             System.out.println(emplist[i].toString());
+             output = output + emplist[i].toString() + "\n";
         }
+
+        return output;
     } 
 
      /** 

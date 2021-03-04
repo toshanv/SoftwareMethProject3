@@ -58,6 +58,9 @@ public class Controller {
     private TextArea textDisplay = new TextArea();
 
     @FXML
+    private TextArea printDisplay = new TextArea();
+
+    @FXML
     public void initialize () {
         employmentStatus.getItems().addAll(employmentStatusList);
         departmentStatus.getItems().addAll(departmentList);
@@ -196,4 +199,15 @@ public class Controller {
         }
     }
 
+    public void handleClickPrint(ActionEvent actionEvent) {
+        printDisplay.appendText(company.print());
+    }
+
+    public void handleClickPrintbyDept(ActionEvent actionEvent) {
+        printDisplay.appendText(company.printByDepartment());
+    }
+
+    public void handleClickPrintbyDate(ActionEvent actionEvent) {
+        printDisplay.appendText(company.printByDate());
+    }
 }

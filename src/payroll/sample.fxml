@@ -41,17 +41,18 @@
          </Tab>
          <Tab text="Employee Database">
             <content>
-               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="603.0">
+               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="603.0">
                   <children>
-                     <VBox prefHeight="200.0" prefWidth="603.0">
+                     <VBox layoutY="14.0" prefHeight="412.0" prefWidth="128.0">
                         <children>
                            <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Import" />
                            <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Export" />
-                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Print" />
-                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Print By Department" />
-                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Print By Date" />
+                           <Button mnemonicParsing="false" onAction="#handleClickPrint" prefHeight="82.0" prefWidth="134.0" text="Print" />
+                           <Button mnemonicParsing="false" onAction="#handleClickPrintbyDept" prefHeight="82.0" prefWidth="134.0" text="Print By Department" />
+                           <Button mnemonicParsing="false" onAction="#handleClickPrintbyDate" prefHeight="82.0" prefWidth="134.0" text="Print By Date" />
                         </children>
                      </VBox>
+                     <TextArea fx:id="printDisplay" layoutX="133.0" layoutY="19.0" prefHeight="398.0" prefWidth="465.0" />
                   </children>
                </AnchorPane>
             </content>
