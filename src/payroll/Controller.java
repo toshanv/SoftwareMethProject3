@@ -147,6 +147,15 @@ public class Controller {
         inputDate = inputDate.substring(5, 7) + "/" + inputDate.substring(8, 10) + "/" + inputDate.substring(0, 4);
         Date dateHired = new Date(inputDate);
 
+        if (name.getText().equals("") || departmentStatus.getValue() == null) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Submission is not valid");
+            errorAlert.setContentText("One of the required fields is empty or is not a valid type double.");
+            errorAlert.showAndWait();
+            resetTab(actionEvent);
+            return;
+        }
+
         if (!dateHired.isValid()) {
             textDisplay.appendText(inputDate + " is not a valid date!\n");
             resetTab(actionEvent);
@@ -179,6 +188,16 @@ public class Controller {
                 employee = new Fulltime(profile, 0, inputPay);
             } else {
                 int managementCode;
+                
+                if (managementStatus.getValue() == null) {
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Submission is not valid");
+                    errorAlert.setContentText("One of the required fields is empty or is not a valid type double.");
+                    errorAlert.showAndWait();
+                    resetTab(actionEvent);
+                    return;
+                }
+
                 if (managementStatus.getValue().toString().equals("Manager")) {
                     managementCode = MANAGER_CODE;
                 } else if (managementStatus.getValue().toString().equals("DepartmentHead")) {
