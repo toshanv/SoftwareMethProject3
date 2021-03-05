@@ -143,11 +143,7 @@ public class Controller {
            return;
         }
 
-        String inputDate = hiredDate.getValue().toString();
-        inputDate = inputDate.substring(5, 7) + "/" + inputDate.substring(8, 10) + "/" + inputDate.substring(0, 4);
-        Date dateHired = new Date(inputDate);
-
-        if (name.getText().equals("") || departmentStatus.getValue() == null) {
+        if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Submission is not valid");
             errorAlert.setContentText("One of the required fields is empty or is not a valid type double.");
@@ -156,8 +152,15 @@ public class Controller {
             return;
         }
 
+        String inputDate = hiredDate.getValue().toString();
+        inputDate = inputDate.substring(5, 7) + "/" + inputDate.substring(8, 10) + "/" + inputDate.substring(0, 4);
+        Date dateHired = new Date(inputDate);
+
         if (!dateHired.isValid()) {
-            textDisplay.appendText(inputDate + " is not a valid date!\n");
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Submission is not valid");
+            errorAlert.setContentText("Date is not a valid date. Try again.");
+            errorAlert.showAndWait();
             resetTab(actionEvent);
             return;
         }
@@ -169,7 +172,10 @@ public class Controller {
             double inputRate = Double.parseDouble(hourlyRate.getText());
 
             if (inputRate < 0) {
-                textDisplay.appendText("Pay rate cannot be negative.\n");
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Submission is not valid");
+                errorAlert.setContentText("Pay rate cannot be negative");
+                errorAlert.showAndWait();
                 resetTab(actionEvent);
                 return;
             }
@@ -179,7 +185,10 @@ public class Controller {
             double inputPay = Double.parseDouble(annualSalary.getText());
 
             if (inputPay < 0) {
-                textDisplay.appendText("Salary cannot be negative.\n");
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Submission is not valid");
+                errorAlert.setContentText("Salary cannot be negative");
+                errorAlert.showAndWait();
                 resetTab(actionEvent);
                 return;
             }
@@ -188,7 +197,7 @@ public class Controller {
                 employee = new Fulltime(profile, 0, inputPay);
             } else {
                 int managementCode;
-                
+
                 if (managementStatus.getValue() == null) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setHeaderText("Submission is not valid");
@@ -229,4 +238,45 @@ public class Controller {
     public void handleClickPrintbyDate(ActionEvent actionEvent) {
         printDisplay.appendText(company.printByDate());
     }
+
+    public void handClickRemove(ActionEvent actionEvent) {
+        if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Submission is not valid");
+            errorAlert.setContentText("One of the required fields is empty or is not a valid type double.");
+            errorAlert.showAndWait();
+            resetTab(actionEvent);
+            return;
+        }
+
+        String inputDate = hiredDate.getValue().toString();
+        inputDate = inputDate.substring(5, 7) + "/" + inputDate.substring(8, 10) + "/" + inputDate.substring(0, 4);
+        Date dateHired = new Date(inputDate);
+
+        if (!dateHired.isValid()) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Submission is not valid");
+            errorAlert.setContentText("Date is not a valid date. Try again.");
+            errorAlert.showAndWait();
+            resetTab(actionEvent);
+            return;
+        }
+
+        Profile profile = new Profile(name.getText(), departmentStatus.getValue().toString(), dateHired);
+
+        Employee employeeToRemove = new Employee(profile, 0);
+        Boolean isRemoved = company.remove(employeeToRemove);
+
+        if (isRemoved) {
+            textDisplay.appendText("Employee removed.\n");
+        } else {
+            if (company.getNumEmployee() == 0) {
+                textDisplay.appendText("Employee database is empty.\n");
+            } else {
+                textDisplay.appendText("Employee does not exist.\n");
+            }
+        }
+
+    }
+
 }
