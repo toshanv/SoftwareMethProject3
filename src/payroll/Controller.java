@@ -239,7 +239,7 @@ public class Controller {
         printDisplay.appendText(company.printByDate());
     }
 
-    public void handClickRemove(ActionEvent actionEvent) {
+    public void handleClickRemove(ActionEvent actionEvent) {
         if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Submission is not valid");
@@ -354,5 +354,8 @@ public class Controller {
             textDisplay.appendText("Employee does not exist.\n");
         }
         resetTab(actionEvent);
+    }
+
+    public void handleCalcPay(ActionEvent actionEvent) {
     }
 }
