@@ -50,8 +50,8 @@
                   <children>
                      <VBox layoutY="14.0" prefHeight="412.0" prefWidth="128.0">
                         <children>
-                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Import" />
-                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Export" />
+                           <Button mnemonicParsing="false" onAction="#importFile" prefHeight="82.0" prefWidth="134.0" text="Import" />
+                           <Button mnemonicParsing="false" onAction="#exportFile" prefHeight="82.0" prefWidth="134.0" text="Export" />
                            <Button mnemonicParsing="false" onAction="#handleClickPrint" prefHeight="82.0" prefWidth="134.0" text="Print" />
                            <Button mnemonicParsing="false" onAction="#handleClickPrintbyDept" prefHeight="82.0" prefWidth="134.0" text="Print By Department" />
                            <Button mnemonicParsing="false" onAction="#handleClickPrintbyDate" prefHeight="82.0" prefWidth="134.0" text="Print By Date" />

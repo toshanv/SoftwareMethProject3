@@ -9,7 +9,7 @@
       <tabs>
          <Tab text="Employee Management">
             <content>
-               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#handleEmploymentRestrictions" prefHeight="517.0" prefWidth="603.0">
+               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#handleEmploymentRestrictions" prefHeight="576.0" prefWidth="606.0">
                   <children>
                      <Text layoutX="26.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="43.13673400878906" />
                      <TextField fx:id="name" layoutX="69.0" layoutY="22.0" />
@@ -31,11 +31,16 @@
                        <buttons>
                           <Button mnemonicParsing="false" onAction="#resetTab" prefHeight="26.0" prefWidth="283.0" text="Reset" />
                           <Button mnemonicParsing="false" onAction="#handleClickAdd" text="Add Employee" />
-                          <Button mnemonicParsing="false" onAction="#handClickRemove" text="Remove Employee" />
+                          <Button mnemonicParsing="false" onAction="#handleClickRemove" text="Remove Employee" />
                           <Button mnemonicParsing="false" onAction="#handleClickSetHours" text="Set Hours" />
                        </buttons>
                      </ButtonBar>
-                     <TextArea fx:id="textDisplay" layoutX="28.0" layoutY="292.0" prefHeight="196.0" prefWidth="551.0" />
+                     <TextArea fx:id="textDisplay" layoutX="27.0" layoutY="335.0" prefHeight="221.0" prefWidth="551.0" />
+                     <ButtonBar layoutX="142.0" layoutY="288.0" prefHeight="40.0" prefWidth="294.0">
+                        <buttons>
+                           <Button mnemonicParsing="false" onAction="#handleCalcPay" prefHeight="26.0" prefWidth="283.0" text="Calculate Payments" />
+                        </buttons>
+                     </ButtonBar>
                   </children></AnchorPane>
             </content>
          </Tab>
@@ -45,8 +50,8 @@
                   <children>
                      <VBox layoutY="14.0" prefHeight="412.0" prefWidth="128.0">
                         <children>
-                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Import" />
-                           <Button mnemonicParsing="false" prefHeight="82.0" prefWidth="134.0" text="Export" />
+                           <Button mnemonicParsing="false" onAction="#importFile" prefHeight="82.0" prefWidth="134.0" text="Import" />
+                           <Button mnemonicParsing="false" onAction="#exportFile" prefHeight="82.0" prefWidth="134.0" text="Export" />
                            <Button mnemonicParsing="false" onAction="#handleClickPrint" prefHeight="82.0" prefWidth="134.0" text="Print" />
                            <Button mnemonicParsing="false" onAction="#handleClickPrintbyDept" prefHeight="82.0" prefWidth="134.0" text="Print By Department" />
                            <Button mnemonicParsing="false" onAction="#handleClickPrintbyDate" prefHeight="82.0" prefWidth="134.0" text="Print By Date" />

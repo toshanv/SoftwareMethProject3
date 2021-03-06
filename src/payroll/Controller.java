@@ -9,6 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.scene.control.Alert.AlertType;
+import java.io.File;
 
 import javax.swing.event.ChangeListener;
 import java.net.URL;
@@ -65,6 +70,35 @@ public class Controller {
         employmentStatus.getItems().addAll(employmentStatusList);
         departmentStatus.getItems().addAll(departmentList);
         managementStatus.getItems().addAll(managementList);
+    }
+
+    @FXML
+    void importFile(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open Source File for the Import");
+        chooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
+                new ExtensionFilter("All Files", "*.*"));
+        Stage stage = new Stage();
+        File sourceFile = chooser.showOpenDialog(stage); //get the reference of the source file
+
+    }
+
+    @FXML
+    void exportFile(ActionEvent event) {
+        if (company.getNumEmployee() == 0) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Database is empty");
+            errorAlert.setContentText("The Database is empty. Cannot export empty database.");
+            errorAlert.showAndWait();
+            return;
+        }
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open Target File for the Export");
+        chooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
+                new ExtensionFilter("All Files", "*.*"));
+        Stage stage = new Stage();
+        File targeFile = chooser.showSaveDialog(stage); //get the reference of the target file
+        //write code to write to the file.
     }
 
     public void resetTab (ActionEvent actionEvent) {
@@ -353,9 +387,19 @@ public class Controller {
         } else {
             textDisplay.appendText("Employee does not exist.\n");
         }
+
         resetTab(actionEvent);
     }
 
     public void handleCalcPay(ActionEvent actionEvent) {
+        if (company.getNumEmployee() == 0) {
+            textDisplay.appendText("Employee database is empty.\n");
+            return;
+        }
+
+        company.processPayments();
+        textDisplay.appendText("Calculation of employee payments is done.\n");
     }
+
+
 }
