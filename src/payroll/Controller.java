@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.FileWriter;
 
 import javax.swing.event.ChangeListener;
 import java.net.URL;
@@ -99,7 +100,6 @@ public class Controller {
         try {
             reader = new BufferedReader(new FileReader(sourceFile));
             String line = reader.readLine();
-            System.out.println(line);
             while (line != null) {
                 String[] inputArr = line.split(",");
 
@@ -159,6 +159,14 @@ public class Controller {
         Stage stage = new Stage();
         File targetFile = chooser.showSaveDialog(stage); //get the reference of the target file
         //write code to write to the file.
+
+        try {
+            FileWriter myWriter = new FileWriter(targetFile);
+            myWriter.write(company.print());
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void resetTab (ActionEvent actionEvent) {
