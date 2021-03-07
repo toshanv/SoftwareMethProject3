@@ -30,7 +30,7 @@
                      <ButtonBar layoutX="14.0" layoutY="239.0" prefHeight="40.0" prefWidth="551.0">
                        <buttons>
                           <Button mnemonicParsing="false" onAction="#resetTab" prefHeight="26.0" prefWidth="283.0" text="Reset" />
-                          <Button mnemonicParsing="false" onAction="#handleClickAdd" text="Add Employee" />
+                          <Button fx:id="addEmployeeButton" mnemonicParsing="false" onAction="#handleClickAdd" text="Add Employee" />
                           <Button mnemonicParsing="false" onAction="#handleClickRemove" text="Remove Employee" />
                           <Button mnemonicParsing="false" onAction="#handleClickSetHours" text="Set Hours" />
                        </buttons>

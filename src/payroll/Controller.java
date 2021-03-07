@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 import java.io.File;
+import java.time.LocalDate;
 
 import javax.swing.event.ChangeListener;
 import java.net.URL;
@@ -66,6 +67,9 @@ public class Controller {
     private TextArea printDisplay = new TextArea();
 
     @FXML
+    private Button addEmployeeButton = new Button();
+
+    @FXML
     public void initialize () {
         employmentStatus.getItems().addAll(employmentStatusList);
         departmentStatus.getItems().addAll(departmentList);
@@ -80,7 +84,14 @@ public class Controller {
                 new ExtensionFilter("All Files", "*.*"));
         Stage stage = new Stage();
         File sourceFile = chooser.showOpenDialog(stage); //get the reference of the source file
-
+        name.setText("hello");
+        employmentStatus.setValue("Parttime");
+        departmentStatus.setValue("ECE");
+        LocalDate date = LocalDate.parse("2021-03-03");
+        //hiredDate.setConverter("2021-03-03");
+        hiredDate.setValue(date);
+        hourlyRate.setText("123");
+        addEmployeeButton.fireEvent(new ActionEvent());
     }
 
     @FXML
@@ -92,12 +103,13 @@ public class Controller {
             errorAlert.showAndWait();
             return;
         }
+
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open Target File for the Export");
         chooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
                 new ExtensionFilter("All Files", "*.*"));
         Stage stage = new Stage();
-        File targeFile = chooser.showSaveDialog(stage); //get the reference of the target file
+        File targetFile = chooser.showSaveDialog(stage); //get the reference of the target file
         //write code to write to the file.
     }
 
