@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 import java.io.File;
 import java.time.LocalDate;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.event.ChangeListener;
 import java.net.URL;
@@ -35,6 +38,13 @@ public class Controller {
 
     private static final int ERROR_CODE = -1;
 
+    // date switching ints from their date format to our date format
+    private static final int LOCALDATE_BEGIN_MONTH = 5;
+    private static final int LOCALDATE_END_MONTH = 7;
+    private static final int LOCALDATE_BEGIN_DAY = 8;
+    private static final int LOCALDATE_END_DAY = 10;
+    private static final int LOCALDATE_BEGIN_YEAR = 0;
+    private static final int LOCALDATE_END_YEAR = 4;
 
     @FXML
     private ChoiceBox employmentStatus = new ChoiceBox();
@@ -84,14 +94,52 @@ public class Controller {
                 new ExtensionFilter("All Files", "*.*"));
         Stage stage = new Stage();
         File sourceFile = chooser.showOpenDialog(stage); //get the reference of the source file
-        name.setText("hello");
-        employmentStatus.setValue("Parttime");
-        departmentStatus.setValue("ECE");
-        LocalDate date = LocalDate.parse("2021-03-03");
-        //hiredDate.setConverter("2021-03-03");
-        hiredDate.setValue(date);
-        hourlyRate.setText("123");
-        addEmployeeButton.fireEvent(new ActionEvent());
+
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(sourceFile));
+            String line = reader.readLine();
+            System.out.println(line);
+            while (line != null) {
+                String[] inputArr = line.split(",");
+
+                // employee name
+                name.setText(inputArr[1]);
+                departmentStatus.setValue(inputArr[2]);
+
+                // switch date to their format
+                String[] inputedDate = inputArr[3].split("/");
+                LocalDate date = LocalDate.of(Integer.parseInt(inputedDate[2]), Integer.parseInt(inputedDate[0]), Integer.parseInt(inputedDate[1]));
+                hiredDate.setValue(date);
+
+                // type of employee
+                if (inputArr[0].equals("P")) {
+                    employmentStatus.setValue("Parttime");
+                    hourlyRate.setText(inputArr[4]);
+                } else if (inputArr[0].equals("F")) {
+                    employmentStatus.setValue("Fulltime");
+                    annualSalary.setText(inputArr[4]);
+                } else {
+                    employmentStatus.setValue("Management");
+                    annualSalary.setText(inputArr[4]);
+                    if (inputArr[5].equals("1")) {
+                        managementStatus.setValue("Manager");
+                    } else if (inputArr[5].equals("2")) {
+                        managementStatus.setValue("DepartmentHead");
+                    } else {
+                        managementStatus.setValue("Director");
+                    }
+                }
+
+                addEmployeeButton.fireEvent(new ActionEvent());
+
+                // read next line
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -124,6 +172,7 @@ public class Controller {
         hiredDate.setValue(null);
     }
 
+    @FXML
     public void handleEmploymentRestrictions(MouseEvent mouseEvent) {
         if (employmentStatus.getValue() == "Parttime"){
             annualSalary.setDisable(true);
@@ -148,6 +197,7 @@ public class Controller {
         }
     }
 
+    @FXML
     public int checkFieldDouble () {
         try {
             Double checkVal;
@@ -178,6 +228,7 @@ public class Controller {
         }
     }
 
+    @FXML
     public void handleClickAdd(ActionEvent actionEvent) {
         final int MANAGER_CODE = 1;
         final int DEPT_HEAD_CODE = 2;
@@ -273,18 +324,22 @@ public class Controller {
         resetTab(actionEvent);
     }
 
+    @FXML
     public void handleClickPrint(ActionEvent actionEvent) {
         printDisplay.appendText(company.print());
     }
 
+    @FXML
     public void handleClickPrintbyDept(ActionEvent actionEvent) {
         printDisplay.appendText(company.printByDepartment());
     }
 
+    @FXML
     public void handleClickPrintbyDate(ActionEvent actionEvent) {
         printDisplay.appendText(company.printByDate());
     }
 
+    @FXML
     public void handleClickRemove(ActionEvent actionEvent) {
         if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -296,7 +351,8 @@ public class Controller {
         }
 
         String inputDate = hiredDate.getValue().toString();
-        inputDate = inputDate.substring(5, 7) + "/" + inputDate.substring(8, 10) + "/" + inputDate.substring(0, 4);
+        inputDate = inputDate.substring(LOCALDATE_BEGIN_MONTH, LOCALDATE_END_MONTH) + "/" + inputDate.substring(LOCALDATE_BEGIN_DAY, LOCALDATE_END_DAY) + "/" + inputDate.substring(LOCALDATE_BEGIN_YEAR, LOCALDATE_END_YEAR);
+
         Date dateHired = new Date(inputDate);
 
         if (!dateHired.isValid()) {
@@ -327,8 +383,10 @@ public class Controller {
 
     }
 
+    @FXML
     public void handleClickSetHours(ActionEvent actionEvent) {
         int inputHours;
+        final int MAX_HOURS = 100;
 
         if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null || hoursWorked.getText().equals("")) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -369,7 +427,7 @@ public class Controller {
         }
 
         String inputDate = hiredDate.getValue().toString();
-        inputDate = inputDate.substring(5, 7) + "/" + inputDate.substring(8, 10) + "/" + inputDate.substring(0, 4);
+        inputDate = inputDate.substring(LOCALDATE_BEGIN_MONTH, LOCALDATE_END_MONTH) + "/" + inputDate.substring(LOCALDATE_BEGIN_DAY, LOCALDATE_END_DAY) + "/" + inputDate.substring(LOCALDATE_BEGIN_YEAR, LOCALDATE_END_YEAR);
         Date dateHired = new Date(inputDate);
 
         if (!dateHired.isValid()) {
@@ -381,7 +439,7 @@ public class Controller {
             return;
         }
 
-        if (inputHours > 100) {
+        if (inputHours > MAX_HOURS) {
             textDisplay.appendText("Invalid Hours: over 100.\n");
             return;
         } else if (inputHours < 0) {
@@ -403,6 +461,7 @@ public class Controller {
         resetTab(actionEvent);
     }
 
+    @FXML
     public void handleCalcPay(ActionEvent actionEvent) {
         if (company.getNumEmployee() == 0) {
             textDisplay.appendText("Employee database is empty.\n");
