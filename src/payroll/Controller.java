@@ -24,6 +24,13 @@ import javax.swing.event.ChangeListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is a controller that helps implement the MVC model for pa.
+ * The controller is responsible for controlling the way that a user interacts with our payroll processing application
+ * @author Christopher Nguyen
+ * @author Toshanraju Vysyaraju
+ */
+
 public class Controller {
     ObservableList <String> employmentStatusList = FXCollections.observableArrayList("Fulltime", "Parttime", "Management");
 
@@ -80,6 +87,9 @@ public class Controller {
     @FXML
     private Button addEmployeeButton = new Button();
 
+    /**
+     * Method used to initialize values for the department, employment, and management choice boxes.
+     */
     @FXML
     public void initialize () {
         employmentStatus.getItems().addAll(employmentStatusList);
@@ -87,6 +97,10 @@ public class Controller {
         managementStatus.getItems().addAll(managementList);
     }
 
+    /**
+     * Method used to import a text file into the employee database.
+     * @param event action event passed when import button is pressed to call importFile method
+     */
     @FXML
     void importFile(ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -142,6 +156,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Method used to export information from the employee database into a new file.
+     * @param event action event passed when export button is pressed to call exportFile method
+     */
     @FXML
     void exportFile(ActionEvent event) {
         if (company.getNumEmployee() == 0) {
@@ -169,6 +187,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Method used to reset the fields to the default value.
+     * @param actionEvent action event passed when reset button is pressed to reset the fields on the GUI
+     */
     public void resetTab (ActionEvent actionEvent) {
         name.clear();
         annualSalary.clear();
@@ -180,6 +202,10 @@ public class Controller {
         hiredDate.setValue(null);
     }
 
+    /**
+     * Method used to handle the restrictions on the text fields and choice boxes based on what employee type is chosen.
+     * @param mouseEvent action event passed when a employee type is pressed to disable or enable restrictions on the GUI
+     */
     @FXML
     public void handleEmploymentRestrictions(MouseEvent mouseEvent) {
         if (employmentStatus.getValue() == "Parttime"){
@@ -205,6 +231,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Helper method used to verify the data passed into text fields to check if it is a valid numerical value.
+     * @return an integer value stating whether the input is valid and verifies what employee type it is based off the input
+     */
     @FXML
     public int checkFieldDouble () {
         try {
@@ -236,6 +266,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Method used to handle the process when the add button is pressed.
+     * If the input is valid, it will add the employee or return the proper response based on the input given
+     * @param actionEvent passed when add button is pressed to call this method to handle adding a employee.
+     */
     @FXML
     public void handleClickAdd(ActionEvent actionEvent) {
         final int MANAGER_CODE = 1;
@@ -332,21 +367,38 @@ public class Controller {
         resetTab(actionEvent);
     }
 
+    /**
+     * Method used to handle printing employee information from company into the text area on the GUI.
+     * @param actionEvent passed when print button is pressed to print employee information from company.
+     */
     @FXML
     public void handleClickPrint(ActionEvent actionEvent) {
         printDisplay.appendText(company.print());
     }
 
+    /**
+     * Method used to handle printing employee information from company into the text area on the GUI sorted by department.
+     * @param actionEvent passed when print button is pressed to print employee information sorted by department from the company.
+     */
     @FXML
     public void handleClickPrintbyDept(ActionEvent actionEvent) {
         printDisplay.appendText(company.printByDepartment());
     }
 
+    /**
+     * Method used to handle printing employee information from company into the text area on the GUI sorted by date.
+     * @param actionEvent passed when print button is pressed to print employee information sorted by date from the company.
+     */
     @FXML
     public void handleClickPrintbyDate(ActionEvent actionEvent) {
         printDisplay.appendText(company.printByDate());
     }
 
+    /**
+     * Method used to handle the process when the remove button is pressed.
+     * If the input is valid and the employee exists, it will remove the employee otherwise it will return a proper response based on the given input.
+     * @param actionEvent passed when remove button is pressed to call this method to handle removing a employee.
+     */
     @FXML
     public void handleClickRemove(ActionEvent actionEvent) {
         if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
@@ -391,6 +443,11 @@ public class Controller {
 
     }
 
+    /**
+     * Method used to handle the process when the set hours button is pressed.
+     * If the input is valid, it will add the employee's hours or will return a appropriate response based on given input
+     * @param actionEvent passed when set hours button is pressed to call this method to handle setting the hours for a employee
+     */
     @FXML
     public void handleClickSetHours(ActionEvent actionEvent) {
         int inputHours;
@@ -469,6 +526,11 @@ public class Controller {
         resetTab(actionEvent);
     }
 
+    /**
+     * Method used to handle the process of calculating an employee's payment.
+     * If the database is not empty, it will calculate the proper payment for each employee in the database.
+     * @param actionEvent passed when calculate payment button is pressed to call this method to handle calculating the payment for each employee in the company database.
+     */
     @FXML
     public void handleCalcPay(ActionEvent actionEvent) {
         if (company.getNumEmployee() == 0) {
