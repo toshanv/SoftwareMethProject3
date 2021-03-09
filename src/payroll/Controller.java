@@ -346,7 +346,7 @@ public class Controller {
                 if (managementStatus.getValue() == null) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setHeaderText("Submission is not valid");
-                    errorAlert.setContentText("Management Roll is empty please fill out.");
+                    errorAlert.setContentText("Management Role is empty please fill out.");
                     errorAlert.showAndWait();
                     return;
                 }
