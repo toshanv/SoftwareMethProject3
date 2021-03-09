@@ -78,13 +78,14 @@ public class Parttime extends Employee {
     @Override
     public void calculatePayment() {
         final double OT_PAY_INCREASE = 1.5;
+        final int REGULAR_HOURS = 80;
 
         int regularHours;
         int overtimeHours;
         
-        if (this.hoursWorked > 80) {
-            regularHours = 80;
-            overtimeHours = this.hoursWorked - 80;
+        if (this.hoursWorked > REGULAR_HOURS) {
+            regularHours = REGULAR_HOURS;
+            overtimeHours = this.hoursWorked - REGULAR_HOURS;
         } else {
             regularHours = this.hoursWorked;
             overtimeHours = 0;

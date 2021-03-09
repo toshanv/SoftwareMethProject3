@@ -30,7 +30,6 @@ import java.util.ResourceBundle;
  * @author Christopher Nguyen
  * @author Toshanraju Vysyaraju
  */
-
 public class Controller {
     ObservableList <String> employmentStatusList = FXCollections.observableArrayList("Fulltime", "Parttime", "Management");
 
@@ -82,9 +81,6 @@ public class Controller {
     private TextArea textDisplay = new TextArea();
 
     @FXML
-    private TextArea printDisplay = new TextArea();
-
-    @FXML
     private Button addEmployeeButton = new Button();
 
     /**
@@ -103,6 +99,17 @@ public class Controller {
      */
     @FXML
     void importFile(ActionEvent event) {
+        final int INPUT_ARR_TYPE_INDEX = 0;
+        final int INPUT_ARR_NAME_INDEX = 1;
+        final int INPUT_ARR_DEPT_INDEX = 2;
+        final int INPUT_ARR_DATE_INDEX = 3;
+        final int INPUT_ARR_PAY_INDEX = 4;
+        final int INPUT_ARR_MGMT_INDEX = 5;
+
+        final int INPUT_DATE_MONTH_INDEX = 0;
+        final int INPUT_DATE_DAY_INDEX = 1;
+        final int INPUT_DATE_YEAR_INDEX = 2;
+
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open Source File for the Import");
         chooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
@@ -118,27 +125,27 @@ public class Controller {
                 String[] inputArr = line.split(",");
 
                 // employee name
-                name.setText(inputArr[1]);
-                departmentStatus.setValue(inputArr[2]);
+                name.setText(inputArr[INPUT_ARR_NAME_INDEX]);
+                departmentStatus.setValue(inputArr[INPUT_ARR_DEPT_INDEX]);
 
                 // switch date to their format
-                String[] inputedDate = inputArr[3].split("/");
-                LocalDate date = LocalDate.of(Integer.parseInt(inputedDate[2]), Integer.parseInt(inputedDate[0]), Integer.parseInt(inputedDate[1]));
+                String[] inputedDate = inputArr[INPUT_ARR_DATE_INDEX].split("/");
+                LocalDate date = LocalDate.of(Integer.parseInt(inputedDate[INPUT_DATE_YEAR_INDEX]), Integer.parseInt(inputedDate[INPUT_DATE_MONTH_INDEX]), Integer.parseInt(inputedDate[INPUT_DATE_DAY_INDEX]));
                 hiredDate.setValue(date);
 
                 // type of employee
-                if (inputArr[0].equals("P")) {
+                if (inputArr[INPUT_ARR_TYPE_INDEX].equals("P")) {
                     employmentStatus.setValue("Parttime");
-                    hourlyRate.setText(inputArr[4]);
-                } else if (inputArr[0].equals("F")) {
+                    hourlyRate.setText(inputArr[INPUT_ARR_PAY_INDEX]);
+                } else if (inputArr[INPUT_ARR_TYPE_INDEX].equals("F")) {
                     employmentStatus.setValue("Fulltime");
-                    annualSalary.setText(inputArr[4]);
+                    annualSalary.setText(inputArr[INPUT_ARR_PAY_INDEX]);
                 } else {
                     employmentStatus.setValue("Management");
-                    annualSalary.setText(inputArr[4]);
-                    if (inputArr[5].equals("1")) {
+                    annualSalary.setText(inputArr[INPUT_ARR_PAY_INDEX]);
+                    if (inputArr[INPUT_ARR_MGMT_INDEX].equals("1")) {
                         managementStatus.setValue("Manager");
-                    } else if (inputArr[5].equals("2")) {
+                    } else if (inputArr[INPUT_ARR_MGMT_INDEX].equals("2")) {
                         managementStatus.setValue("DepartmentHead");
                     } else {
                         managementStatus.setValue("Director");
@@ -185,6 +192,8 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        textDisplay.appendText("Database exported to " + targetFile.getName() + ".\n");
     }
 
     /**
@@ -288,7 +297,6 @@ public class Controller {
             errorAlert.setHeaderText("Submission is not valid");
             errorAlert.setContentText("One of the required fields is empty.");
             errorAlert.showAndWait();
-            resetTab(actionEvent);
             return;
         }
 
@@ -301,7 +309,6 @@ public class Controller {
             errorAlert.setHeaderText("Submission is not valid");
             errorAlert.setContentText("Date is not a valid date. Try again.");
             errorAlert.showAndWait();
-            resetTab(actionEvent);
             return;
         }
 
@@ -316,7 +323,6 @@ public class Controller {
                 errorAlert.setHeaderText("Submission is not valid");
                 errorAlert.setContentText("Pay rate cannot be negative");
                 errorAlert.showAndWait();
-                resetTab(actionEvent);
                 return;
             }
 
@@ -329,7 +335,6 @@ public class Controller {
                 errorAlert.setHeaderText("Submission is not valid");
                 errorAlert.setContentText("Salary cannot be negative");
                 errorAlert.showAndWait();
-                resetTab(actionEvent);
                 return;
             }
 
@@ -373,7 +378,7 @@ public class Controller {
      */
     @FXML
     public void handleClickPrint(ActionEvent actionEvent) {
-        printDisplay.appendText(company.print());
+        textDisplay.appendText(company.print());
     }
 
     /**
@@ -382,7 +387,7 @@ public class Controller {
      */
     @FXML
     public void handleClickPrintbyDept(ActionEvent actionEvent) {
-        printDisplay.appendText(company.printByDepartment());
+        textDisplay.appendText(company.printByDepartment());
     }
 
     /**
@@ -391,7 +396,7 @@ public class Controller {
      */
     @FXML
     public void handleClickPrintbyDate(ActionEvent actionEvent) {
-        printDisplay.appendText(company.printByDate());
+        textDisplay.appendText(company.printByDate());
     }
 
     /**
@@ -406,7 +411,6 @@ public class Controller {
             errorAlert.setHeaderText("Submission is not valid");
             errorAlert.setContentText("One of the required fields is empty.");
             errorAlert.showAndWait();
-            resetTab(actionEvent);
             return;
         }
 
@@ -420,7 +424,6 @@ public class Controller {
             errorAlert.setHeaderText("Submission is not valid");
             errorAlert.setContentText("Date is not a valid date. Try again.");
             errorAlert.showAndWait();
-            resetTab(actionEvent);
             return;
         }
 
@@ -453,12 +456,11 @@ public class Controller {
         int inputHours;
         final int MAX_HOURS = 100;
 
-        if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null || hoursWorked.getText().equals("")) {
+        if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null || hoursWorked.getText().equals("") || employmentStatus.getValue() == null) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Submission is not valid");
             errorAlert.setContentText("One of the required fields is empty.");
             errorAlert.showAndWait();
-            resetTab(actionEvent);
             return;
         }
         if (!employmentStatus.getValue().toString().equals("Parttime")) {
@@ -500,7 +502,6 @@ public class Controller {
             errorAlert.setHeaderText("Submission is not valid");
             errorAlert.setContentText("Date is not a valid date. Try again.");
             errorAlert.showAndWait();
-            resetTab(actionEvent);
             return;
         }
 

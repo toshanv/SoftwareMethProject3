@@ -17,9 +17,10 @@ public class Date implements Comparable<Date> {
      * @param date is string format of the date
      */ 
     public Date(String date) {
+        final int DATE_SIZE = 3;
         String[] input = date.split("/");
 
-        if (input.length != 3) {
+        if (input.length != DATE_SIZE) {
             this.month = 0;
             this.day = 0;
             this.year = 0;
@@ -206,7 +207,7 @@ public class Date implements Comparable<Date> {
                 if (this.day > MAX_DAYS_SMALL) {
                     return false;
                 }
-                
+
                 break;
             case DECEMBER:
                 if (this.day > MAX_DAYS_LARGE) {

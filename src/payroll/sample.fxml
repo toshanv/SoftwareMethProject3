@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="payroll.Controller">
-   <TabPane GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane alignment="center" hgap="10" prefHeight="601.0" prefWidth="616.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="payroll.Controller">
+   <TabPane prefHeight="363.0" prefWidth="606.0" GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <tabs>
          <Tab text="Employee Management">
             <content>
-               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#handleEmploymentRestrictions" prefHeight="576.0" prefWidth="606.0">
+               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#handleEmploymentRestrictions" prefHeight="328.0" prefWidth="606.0">
                   <children>
                      <Text layoutX="26.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="43.13673400878906" />
                      <TextField fx:id="name" layoutX="69.0" layoutY="22.0" />
@@ -35,7 +35,6 @@
                           <Button mnemonicParsing="false" onAction="#handleClickSetHours" text="Set Hours" />
                        </buttons>
                      </ButtonBar>
-                     <TextArea fx:id="textDisplay" layoutX="27.0" layoutY="335.0" prefHeight="221.0" prefWidth="551.0" />
                      <ButtonBar layoutX="142.0" layoutY="288.0" prefHeight="40.0" prefWidth="294.0">
                         <buttons>
                            <Button mnemonicParsing="false" onAction="#handleCalcPay" prefHeight="26.0" prefWidth="283.0" text="Calculate Payments" />
@@ -46,29 +45,30 @@
          </Tab>
          <Tab text="Employee Database">
             <content>
-               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="603.0">
+               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="603.0">
                   <children>
-                     <VBox layoutY="14.0" prefHeight="412.0" prefWidth="128.0">
+                     <VBox layoutX="5.0" layoutY="2.0" prefHeight="325.0" prefWidth="592.0">
                         <children>
-                           <Button mnemonicParsing="false" onAction="#importFile" prefHeight="82.0" prefWidth="134.0" text="Import" />
-                           <Button mnemonicParsing="false" onAction="#exportFile" prefHeight="82.0" prefWidth="134.0" text="Export" />
-                           <Button mnemonicParsing="false" onAction="#handleClickPrint" prefHeight="82.0" prefWidth="134.0" text="Print" />
-                           <Button mnemonicParsing="false" onAction="#handleClickPrintbyDept" prefHeight="82.0" prefWidth="134.0" text="Print By Department" />
-                           <Button mnemonicParsing="false" onAction="#handleClickPrintbyDate" prefHeight="82.0" prefWidth="134.0" text="Print By Date" />
+                           <Button mnemonicParsing="false" onAction="#importFile" prefHeight="70.0" prefWidth="611.0" text="Import" />
+                           <Button mnemonicParsing="false" onAction="#exportFile" prefHeight="72.0" prefWidth="609.0" text="Export" />
+                           <Button mnemonicParsing="false" onAction="#handleClickPrint" prefHeight="71.0" prefWidth="606.0" text="Print" />
+                           <Button mnemonicParsing="false" onAction="#handleClickPrintbyDept" prefHeight="73.0" prefWidth="615.0" text="Print By Department" />
+                           <Button mnemonicParsing="false" onAction="#handleClickPrintbyDate" prefHeight="75.0" prefWidth="656.0" text="Print By Date" />
                         </children>
                      </VBox>
-                     <TextArea fx:id="printDisplay" layoutX="133.0" layoutY="19.0" prefHeight="398.0" prefWidth="465.0" />
                   </children>
                </AnchorPane>
             </content>
          </Tab>
       </tabs>
    </TabPane>
+   <TextArea fx:id="textDisplay" prefHeight="221.0" prefWidth="510.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
+      <RowConstraints />
       <RowConstraints />
    </rowConstraints>
 
