@@ -1,6 +1,10 @@
 package payroll;
 
-/** 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+/**
  * This class is an array-based container class that implements the employee database.
  * The array will store a list of employees, which may include the instances of full-time, part-time and management.
  * @author Christopher Nguyen
@@ -246,13 +250,42 @@ public class Company {
         Employee temp;
 
         for (int i = 0; i < numEmployee; i++) {
-            for (int j = i + 1; j < numEmployee; j++) { 
+            for (int j = i + 1; j < numEmployee; j++) {
                 if (emplist[i].getProfile().getDateHired().compareTo(emplist[j].getProfile().getDateHired()) > 0) {
                     temp = emplist[i];
                     emplist[i] = emplist[j];
                     emplist[j] = temp;
                 }
             }
+        }
+    }
+
+    /**
+     * Exports the employees from the database into the designated file in the current order
+     * @param targetFile to export the database into
+     */
+    public void exportDatabase(File targetFile) {
+        String output = "";
+
+        for (Employee emp : emplist) {
+            if (emp instanceof Parttime) {
+                Parttime empParttime = (Parttime)emp;
+                output = output + (empParttime.toString()) + "\n";
+            } else if (emp instanceof Management) {
+                Management empManagement = (Management)emp;
+                output = output + (empManagement.toString()) + "\n";
+            } else if (emp instanceof Fulltime) {
+                Fulltime empFulltime = (Fulltime)emp;
+                output = output + (empFulltime.toString()) + "\n";
+            }
+        }
+
+        try {
+            FileWriter myWriter = new FileWriter(targetFile);
+            myWriter.write(output);
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

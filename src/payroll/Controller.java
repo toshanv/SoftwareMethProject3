@@ -1,28 +1,19 @@
 package payroll;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert.AlertType;
 import java.io.File;
 import java.time.LocalDate;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.FileWriter;
-
-import javax.swing.event.ChangeListener;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * This class is a controller that helps implement the MVC model for pa.
@@ -91,6 +82,13 @@ public class Controller {
         employmentStatus.getItems().addAll(employmentStatusList);
         departmentStatus.getItems().addAll(departmentList);
         managementStatus.getItems().addAll(managementList);
+        hiredDate.setEditable(false);
+        hiredDate.setPromptText("Select using calendar");
+        name.setPromptText("Enter name");
+        annualSalary.setPromptText("Enter salary if adding");
+        hourlyRate.setPromptText("Enter rate if adding");
+        hoursWorked.setPromptText("Enter hours for set hours");
+
     }
 
     /**
@@ -121,6 +119,7 @@ public class Controller {
         try {
             reader = new BufferedReader(new FileReader(sourceFile));
             String line = reader.readLine();
+
             while (line != null) {
                 String[] inputArr = line.split(",");
 
@@ -157,6 +156,7 @@ public class Controller {
                 // read next line
                 line = reader.readLine();
             }
+
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -170,10 +170,7 @@ public class Controller {
     @FXML
     void exportFile(ActionEvent event) {
         if (company.getNumEmployee() == 0) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Database is empty");
-            errorAlert.setContentText("The Database is empty. Cannot export empty database.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("The Database is empty. Cannot export empty database.\n");
             return;
         }
 
@@ -185,13 +182,7 @@ public class Controller {
         File targetFile = chooser.showSaveDialog(stage); //get the reference of the target file
         //write code to write to the file.
 
-        try {
-            FileWriter myWriter = new FileWriter(targetFile);
-            myWriter.write(company.print());
-            myWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        company.exportDatabase(targetFile);
 
         textDisplay.appendText("Database exported to " + targetFile.getName() + ".\n");
     }
@@ -250,7 +241,6 @@ public class Controller {
             Double checkVal;
             if (employmentStatus.getValue() == "Parttime") {
                 checkVal = Double.parseDouble(hourlyRate.getText());
-                // checkVal = Double.parseDouble(hoursWorked.getText());
                 return PARTTIME_CODE;
             } else if (employmentStatus.getValue() == "Management" || employmentStatus.getValue() == "Fulltime") {
                 checkVal = Double.parseDouble(annualSalary.getText());
@@ -260,17 +250,11 @@ public class Controller {
                     return FULLTIME_CODE;
                 }
             } else {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText("Submission is not valid");
-                errorAlert.setContentText("One of the required fields is empty or is not a valid type double.");
-                errorAlert.showAndWait();
+                textDisplay.appendText("Submission is not valid. One of the required fields is empty or is not a valid type double.\n");
                 return ERROR_CODE;
             }
         } catch (NumberFormatException ex) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("One of the required fields is empty or is not a valid type double.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. One of the required fields is empty or is not a valid type double.\n");
             return ERROR_CODE;
         }
     }
@@ -293,10 +277,7 @@ public class Controller {
         }
 
         if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("One of the required fields is empty.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. One of the required fields is empty.\n");
             return;
         }
 
@@ -305,10 +286,7 @@ public class Controller {
         Date dateHired = new Date(inputDate);
 
         if (!dateHired.isValid()) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("Date is not a valid date. Try again.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. Date is not a valid date. Try again.\n");
             return;
         }
 
@@ -319,10 +297,7 @@ public class Controller {
             double inputRate = Double.parseDouble(hourlyRate.getText());
 
             if (inputRate < 0) {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText("Submission is not valid");
-                errorAlert.setContentText("Pay rate cannot be negative");
-                errorAlert.showAndWait();
+                textDisplay.appendText("Submission is not valid. Pay rate cannot be negative.\n");
                 return;
             }
 
@@ -331,10 +306,7 @@ public class Controller {
             double inputPay = Double.parseDouble(annualSalary.getText());
 
             if (inputPay < 0) {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText("Submission is not valid");
-                errorAlert.setContentText("Salary cannot be negative");
-                errorAlert.showAndWait();
+                textDisplay.appendText("Submission is not valid. Salary cannot be negative.\n");
                 return;
             }
 
@@ -344,10 +316,7 @@ public class Controller {
                 int managementCode;
 
                 if (managementStatus.getValue() == null) {
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                    errorAlert.setHeaderText("Submission is not valid");
-                    errorAlert.setContentText("Management Role is empty please fill out.");
-                    errorAlert.showAndWait();
+                    textDisplay.appendText("Submission is not valid. Management Role is empty please fill out.\n");
                     return;
                 }
 
@@ -407,10 +376,7 @@ public class Controller {
     @FXML
     public void handleClickRemove(ActionEvent actionEvent) {
         if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("One of the required fields is empty.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. One of the required fields is empty.\n");
             return;
         }
 
@@ -420,10 +386,7 @@ public class Controller {
         Date dateHired = new Date(inputDate);
 
         if (!dateHired.isValid()) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("Date is not a valid date. Try again.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. Date is invalid.\n");
             return;
         }
 
@@ -457,17 +420,11 @@ public class Controller {
         final int MAX_HOURS = 100;
 
         if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null || hoursWorked.getText().equals("") || employmentStatus.getValue() == null) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("One of the required fields is empty.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. One of the required fields is empty.\n");
             return;
         }
         if (!employmentStatus.getValue().toString().equals("Parttime")) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("Cannot Set Hours for Management or Fulltime only Parttime");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. Cannot Set Hours for Management or Fulltime only Parttime.\n");
             return;
         }
 
@@ -475,17 +432,11 @@ public class Controller {
             if (hoursWorked.getText() != "") {
                 inputHours = Integer.parseInt(hoursWorked.getText());
             } else {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText("Submission is not valid");
-                errorAlert.setContentText("Hours Worked is empty fill in.");
-                errorAlert.showAndWait();
+                textDisplay.appendText("Submission is not valid. Hours Worked is empty, please fill in.\n");
                 return;
             }
         } catch (NumberFormatException ex) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("Hours work is not a valid type int.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. Hours work is not a valid int.\n");
             return;
         }
         if (company.getNumEmployee() == 0) {
@@ -498,10 +449,7 @@ public class Controller {
         Date dateHired = new Date(inputDate);
 
         if (!dateHired.isValid()) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Submission is not valid");
-            errorAlert.setContentText("Date is not a valid date. Try again.");
-            errorAlert.showAndWait();
+            textDisplay.appendText("Submission is not valid. Date is not a valid date. Try again.\n");
             return;
         }
 
@@ -512,7 +460,6 @@ public class Controller {
             textDisplay.appendText("Working hours cannot be negative.\n");
             return;
         }
-
 
         Profile profile = new Profile(name.getText(), departmentStatus.getValue().toString(), dateHired);
         Employee employeeToSetHours = new Parttime(profile, 0, 0, inputHours);
@@ -542,6 +489,4 @@ public class Controller {
         company.processPayments();
         textDisplay.appendText("Calculation of employee payments is done.\n");
     }
-
-
 }

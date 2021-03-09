@@ -13,7 +13,7 @@
                   <children>
                      <Text layoutX="26.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="43.13673400878906" />
                      <TextField fx:id="name" layoutX="69.0" layoutY="22.0" />
-                     <TextField fx:id="annualSalary" alignment="CENTER" layoutX="119.0" layoutY="141.0" />
+                     <TextField fx:id="annualSalary" layoutX="119.0" layoutY="141.0" />
                      <Text layoutX="324.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Department:" wrappingWidth="103.13671112060547" />
                      <DatePicker fx:id="hiredDate" layoutX="69.0" layoutY="79.0" />
                      <Text layoutX="26.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="37.13671875" />
@@ -62,7 +62,7 @@
          </Tab>
       </tabs>
    </TabPane>
-   <TextArea fx:id="textDisplay" prefHeight="221.0" prefWidth="510.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   <TextArea fx:id="textDisplay" editable="false" prefHeight="221.0" prefWidth="510.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
