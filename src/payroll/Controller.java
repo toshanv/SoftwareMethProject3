@@ -28,8 +28,6 @@ import java.io.IOException;
  */
 public class Controller {
 
-    ObservableList <String> employmentStatusList = FXCollections.observableArrayList("Fulltime", "Parttime", "Management");
-
     Company company = new Company();
 
     private static final int PARTTIME_CODE = 1;
@@ -46,8 +44,6 @@ public class Controller {
     private static final int LOCALDATE_BEGIN_YEAR = 0;
     private static final int LOCALDATE_END_YEAR = 4;
 
-    @FXML
-    private ChoiceBox employmentStatus = new ChoiceBox();
 
     @FXML
     private DatePicker hiredDate = new DatePicker();
@@ -94,12 +90,23 @@ public class Controller {
     @FXML
     private ToggleGroup departmentGroup = new ToggleGroup();
 
+    @FXML
+    private RadioButton partRB = new RadioButton();
+
+    @FXML
+    private RadioButton fullRB = new RadioButton();
+
+    @FXML
+    private RadioButton managementRB = new RadioButton();
+
+    @FXML
+    private ToggleGroup employmentGroup = new ToggleGroup();
+
     /**
      * Method used to initialize values for the department, employment, and management choice boxes.
      */
     @FXML
     public void initialize () {
-        employmentStatus.getItems().addAll(employmentStatusList);
         manRB.setUserData("Manager");
         dhRB.setUserData("DepartmentHead");
         dirRB.setUserData("Director");
@@ -115,6 +122,14 @@ public class Controller {
         eceRB.setToggleGroup(departmentGroup);
         itRB.setToggleGroup(departmentGroup);
         csRB.setToggleGroup(departmentGroup);
+
+        managementRB.setUserData("Management");
+        fullRB.setUserData("Fulltime");
+        partRB.setUserData("Parttime");
+
+        managementRB.setToggleGroup(employmentGroup);
+        fullRB.setToggleGroup(employmentGroup);
+        partRB.setToggleGroup(employmentGroup);
 
 
 
@@ -177,13 +192,13 @@ public class Controller {
 
                 // type of employee
                 if (inputArr[INPUT_ARR_TYPE_INDEX].equals("P")) {
-                    employmentStatus.setValue("Parttime");
+                    employmentGroup.selectToggle(partRB);
                     hourlyRate.setText(inputArr[INPUT_ARR_PAY_INDEX]);
                 } else if (inputArr[INPUT_ARR_TYPE_INDEX].equals("F")) {
-                    employmentStatus.setValue("Fulltime");
+                    employmentGroup.selectToggle(fullRB);
                     annualSalary.setText(inputArr[INPUT_ARR_PAY_INDEX]);
                 } else {
-                    employmentStatus.setValue("Management");
+                    employmentGroup.selectToggle(managementRB);
                     annualSalary.setText(inputArr[INPUT_ARR_PAY_INDEX]);
                     if (inputArr[INPUT_ARR_MGMT_INDEX].equals("1")) {
                         rbGroup.selectToggle(manRB);
@@ -239,7 +254,17 @@ public class Controller {
         annualSalary.clear();
         hoursWorked.clear();
         hourlyRate.clear();
-        employmentStatus.setValue(null);
+
+        if (employmentGroup.getSelectedToggle() != null) {
+            employmentGroup.getSelectedToggle().setSelected(false);
+            annualSalary.setDisable(false);
+            hoursWorked.setDisable(false);
+            hourlyRate.setDisable(false);
+            dhRB.setDisable(false);
+            dirRB.setDisable(false);
+            manRB.setDisable(false);
+        }
+
 
         if (departmentGroup.getSelectedToggle() != null) {
             departmentGroup.getSelectedToggle().setSelected(false);
@@ -254,38 +279,40 @@ public class Controller {
 
     /**
      * Method used to handle the restrictions on the text fields and choice boxes based on what employee type is chosen.
-     * @param mouseEvent action event passed when a employee type is pressed to disable or enable restrictions on the GUI
+     * @param actionEvent action event passed when a employee type is pressed to disable or enable restrictions on the GUI
      */
     @FXML
-    public void handleEmploymentRestrictions(MouseEvent mouseEvent) {
-        if (employmentStatus.getValue() == "Parttime"){
-            annualSalary.setDisable(true);
-            hoursWorked.setDisable(false);
-            hourlyRate.setDisable(false);
-            dhRB.setDisable(true);
-            dirRB.setDisable(true);
-            manRB.setDisable(true);
-        } else if (employmentStatus.getValue() == "Fulltime" ) {
-            annualSalary.setDisable(false);
-            hoursWorked.setDisable(true);
-            hourlyRate.setDisable(true);
-            dhRB.setDisable(true);
-            dirRB.setDisable(true);
-            manRB.setDisable(true);
-        } else if (employmentStatus.getValue() == "Management") {
-            annualSalary.setDisable(false);
-            hoursWorked.setDisable(true);
-            hourlyRate.setDisable(true);
-            dhRB.setDisable(false);
-            dirRB.setDisable(false);
-            manRB.setDisable(false);
-        } else {
-            annualSalary.setDisable(false);
-            hoursWorked.setDisable(false);
-            hourlyRate.setDisable(false);
-            dhRB.setDisable(false);
-            dirRB.setDisable(false);
-            manRB.setDisable(false);
+    public void handleEmploymentRestrictions(ActionEvent actionEvent) {
+        if (employmentGroup.getSelectedToggle() != null){
+            if (employmentGroup.getSelectedToggle().getUserData().toString().equals("Parttime")){
+                annualSalary.setDisable(true);
+                hoursWorked.setDisable(false);
+                hourlyRate.setDisable(false);
+                dhRB.setDisable(true);
+                dirRB.setDisable(true);
+                manRB.setDisable(true);
+            } else if (employmentGroup.getSelectedToggle().getUserData().toString().equals("Fulltime")) {
+                annualSalary.setDisable(false);
+                hoursWorked.setDisable(true);
+                hourlyRate.setDisable(true);
+                dhRB.setDisable(true);
+                dirRB.setDisable(true);
+                manRB.setDisable(true);
+            } else if (employmentGroup.getSelectedToggle().getUserData().toString().equals("Management")) {
+                annualSalary.setDisable(false);
+                hoursWorked.setDisable(true);
+                hourlyRate.setDisable(true);
+                dhRB.setDisable(false);
+                dirRB.setDisable(false);
+                manRB.setDisable(false);
+            } else {
+                annualSalary.setDisable(false);
+                hoursWorked.setDisable(false);
+                hourlyRate.setDisable(false);
+                dhRB.setDisable(false);
+                dirRB.setDisable(false);
+                manRB.setDisable(false);
+            }
         }
     }
 
@@ -297,16 +324,16 @@ public class Controller {
     public int checkFieldDouble () {
         try {
             Double checkVal;
-            if (employmentStatus.getValue() == "Parttime") {
+            if (employmentGroup.getSelectedToggle().getUserData().toString().equals("Parttime")) {
                 checkVal = Double.parseDouble(hourlyRate.getText());
                 return PARTTIME_CODE;
-            } else if (employmentStatus.getValue() == "Management" || employmentStatus.getValue() == "Fulltime") {
+            } else if (employmentGroup.getSelectedToggle().getUserData().toString().equals("Fulltime")) {
                 checkVal = Double.parseDouble(annualSalary.getText());
-                if (employmentStatus.getValue() == "Management") {
-                    return MANAGEMENT_CODE;
-                } else {
-                    return FULLTIME_CODE;
-                }
+                return FULLTIME_CODE;
+
+            } else if (employmentGroup.getSelectedToggle().getUserData().toString().equals("Management")) {
+                checkVal = Double.parseDouble(annualSalary.getText());
+                return MANAGEMENT_CODE;
             } else {
                 textDisplay.appendText("Submission is not valid. One of the required fields is empty or is not a valid type double.\n");
                 return ERROR_CODE;
@@ -477,11 +504,11 @@ public class Controller {
         int inputHours;
         final int MAX_HOURS = 100;
 
-        if (name.getText().equals("") || departmentGroup.getSelectedToggle()== null || hiredDate.getValue() == null || hoursWorked.getText().equals("") || employmentStatus.getValue() == null) {
+        if (name.getText().equals("") || departmentGroup.getSelectedToggle()== null || hiredDate.getValue() == null || hoursWorked.getText().equals("") || employmentGroup.getSelectedToggle()== null) {
             textDisplay.appendText("Submission is not valid. One of the required fields is empty.\n");
             return;
         }
-        if (!employmentStatus.getValue().toString().equals("Parttime")) {
+        if (!employmentGroup.getSelectedToggle().getUserData().toString().equals("Parttime")) {
             textDisplay.appendText("Submission is not valid. Cannot Set Hours for Management or Fulltime only Parttime.\n");
             return;
         }
@@ -547,4 +574,5 @@ public class Controller {
         company.processPayments();
         textDisplay.appendText("Calculation of employee payments is done.\n");
     }
+
 }
