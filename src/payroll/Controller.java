@@ -5,10 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.awt.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.io.BufferedReader;
@@ -24,8 +29,6 @@ import java.io.IOException;
 public class Controller {
 
     ObservableList <String> employmentStatusList = FXCollections.observableArrayList("Fulltime", "Parttime", "Management");
-
-    ObservableList <String> departmentList = FXCollections.observableArrayList("CS", "IT", "ECE");
 
     Company company = new Company();
 
@@ -45,9 +48,6 @@ public class Controller {
 
     @FXML
     private ChoiceBox employmentStatus = new ChoiceBox();
-
-    @FXML
-    private ChoiceBox departmentStatus = new ChoiceBox();
 
     @FXML
     private DatePicker hiredDate = new DatePicker();
@@ -82,19 +82,42 @@ public class Controller {
     @FXML
     private ToggleGroup rbGroup = new ToggleGroup();
 
+    @FXML
+    private RadioButton csRB = new RadioButton();
+
+    @FXML
+    private RadioButton eceRB = new RadioButton();
+
+    @FXML
+    private RadioButton itRB = new RadioButton();
+
+    @FXML
+    private ToggleGroup departmentGroup = new ToggleGroup();
+
     /**
      * Method used to initialize values for the department, employment, and management choice boxes.
      */
     @FXML
     public void initialize () {
         employmentStatus.getItems().addAll(employmentStatusList);
-        departmentStatus.getItems().addAll(departmentList);
         manRB.setUserData("Manager");
         dhRB.setUserData("DepartmentHead");
         dirRB.setUserData("Director");
+
         manRB.setToggleGroup(rbGroup);
         dirRB.setToggleGroup(rbGroup);
         dhRB.setToggleGroup(rbGroup);
+
+        eceRB.setUserData("ECE");
+        itRB.setUserData("IT");
+        csRB.setUserData("CS");
+
+        eceRB.setToggleGroup(departmentGroup);
+        itRB.setToggleGroup(departmentGroup);
+        csRB.setToggleGroup(departmentGroup);
+
+
+
         hiredDate.setEditable(false);
         hiredDate.setPromptText("Select using calendar");
         name.setPromptText("Enter name");
@@ -138,7 +161,14 @@ public class Controller {
 
                 // employee name
                 name.setText(inputArr[INPUT_ARR_NAME_INDEX]);
-                departmentStatus.setValue(inputArr[INPUT_ARR_DEPT_INDEX]);
+                if (inputArr[INPUT_ARR_DEPT_INDEX].equals(csRB.getText())){
+                    departmentGroup.selectToggle(csRB);
+                } else if (inputArr[INPUT_ARR_DEPT_INDEX].equals(eceRB.getText())) {
+                    departmentGroup.selectToggle(eceRB);
+                }
+                else if (inputArr[INPUT_ARR_DEPT_INDEX].equals(itRB.getText())) {
+                    departmentGroup.selectToggle(itRB);
+                }
 
                 // switch date to their format
                 String[] inputedDate = inputArr[INPUT_ARR_DATE_INDEX].split("/");
@@ -209,11 +239,16 @@ public class Controller {
         annualSalary.clear();
         hoursWorked.clear();
         hourlyRate.clear();
-        departmentStatus.setValue(null);
         employmentStatus.setValue(null);
+
+        if (departmentGroup.getSelectedToggle() != null) {
+            departmentGroup.getSelectedToggle().setSelected(false);
+        }
+
         if (rbGroup.getSelectedToggle() != null) {
             rbGroup.getSelectedToggle().setSelected(false);
         }
+
         hiredDate.setValue(null);
     }
 
@@ -299,7 +334,7 @@ public class Controller {
            return;
         }
 
-        if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
+        if (name.getText().equals("") || departmentGroup.getSelectedToggle()== null || hiredDate.getValue() == null) {
             textDisplay.appendText("Submission is not valid. One of the required fields is empty.\n");
             return;
         }
@@ -313,7 +348,7 @@ public class Controller {
             return;
         }
 
-        Profile profile = new Profile(name.getText(), departmentStatus.getValue().toString(), dateHired);
+        Profile profile = new Profile(name.getText(), departmentGroup.getSelectedToggle().getUserData().toString(), dateHired);
 
         Employee employee = null;
         if (employeeType == PARTTIME_CODE) {
@@ -398,7 +433,7 @@ public class Controller {
      */
     @FXML
     public void handleClickRemove(ActionEvent actionEvent) {
-        if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null) {
+        if (name.getText().equals("") || departmentGroup.getSelectedToggle()== null || hiredDate.getValue() == null) {
             textDisplay.appendText("Submission is not valid. One of the required fields is empty.\n");
             return;
         }
@@ -413,7 +448,7 @@ public class Controller {
             return;
         }
 
-        Profile profile = new Profile(name.getText(), departmentStatus.getValue().toString(), dateHired);
+        Profile profile = new Profile(name.getText(), departmentGroup.getSelectedToggle().getUserData().toString(), dateHired);
 
         Employee employeeToRemove = new Employee(profile, 0);
         Boolean isRemoved = company.remove(employeeToRemove);
@@ -442,7 +477,7 @@ public class Controller {
         int inputHours;
         final int MAX_HOURS = 100;
 
-        if (name.getText().equals("") || departmentStatus.getValue() == null || hiredDate.getValue() == null || hoursWorked.getText().equals("") || employmentStatus.getValue() == null) {
+        if (name.getText().equals("") || departmentGroup.getSelectedToggle()== null || hiredDate.getValue() == null || hoursWorked.getText().equals("") || employmentStatus.getValue() == null) {
             textDisplay.appendText("Submission is not valid. One of the required fields is empty.\n");
             return;
         }
@@ -484,7 +519,7 @@ public class Controller {
             return;
         }
 
-        Profile profile = new Profile(name.getText(), departmentStatus.getValue().toString(), dateHired);
+        Profile profile = new Profile(name.getText(), departmentGroup.getSelectedToggle().getUserData().toString(), dateHired);
         Employee employeeToSetHours = new Parttime(profile, 0, 0, inputHours);
         Boolean isUpdated = company.setHours(employeeToSetHours);
 

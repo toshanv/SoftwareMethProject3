@@ -14,21 +14,24 @@
                      <Text layoutX="26.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="43.13673400878906" />
                      <TextField fx:id="name" layoutX="69.0" layoutY="22.0" />
                      <TextField fx:id="annualSalary" layoutX="119.0" layoutY="141.0" />
-                     <Text layoutX="324.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Department:" wrappingWidth="103.13671112060547" />
+                     <Text layoutX="301.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Department:" wrappingWidth="103.13671112060547" />
                      <DatePicker fx:id="hiredDate" layoutX="69.0" layoutY="79.0" />
                      <Text layoutX="26.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="37.13671875" />
                      <Text layoutX="28.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Annual Salary:" wrappingWidth="82.13672637939453" />
-                     <ChoiceBox fx:id="employmentStatus" layoutX="438.0" layoutY="71.0" onMouseClicked="#handleEmploymentRestrictions" onMouseDragged="#handleEmploymentRestrictions" onMouseExited="#handleEmploymentRestrictions" prefWidth="150.0" />
-                     <Text layoutX="323.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employment Type:" />
-                     <ChoiceBox fx:id="departmentStatus" layoutX="438.0" layoutY="22.0" prefWidth="150.0" />
+                     <ChoiceBox fx:id="employmentStatus" layoutX="372.0" layoutY="9.0" onMouseClicked="#handleEmploymentRestrictions" onMouseDragged="#handleEmploymentRestrictions" onMouseExited="#handleEmploymentRestrictions" prefWidth="150.0" />
+                     <Text layoutX="305.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employment Type:" />
                      <TextField fx:id="hoursWorked" layoutX="119.0" layoutY="194.0" />
                      <Text layoutX="28.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Worked:" wrappingWidth="91.13673400878906" />
                      <Text layoutX="322.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate:" wrappingWidth="74.13671112060547" />
                      <TextField fx:id="hourlyRate" layoutX="439.0" layoutY="193.0" prefHeight="27.0" prefWidth="148.0" />
-                     <Text layoutX="322.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Management Role:" wrappingWidth="106.13671875" />
-                     <RadioButton fx:id="manRB" layoutX="449.0" layoutY="122.0" prefHeight="18.0" prefWidth="84.0" text="Manager" />
-                     <RadioButton fx:id="dhRB" layoutX="448.0" layoutY="143.0" prefHeight="19.0" prefWidth="117.0" text="DepartmentHead" />
-                     <RadioButton fx:id="dirRB" layoutX="448.0" layoutY="167.0" prefHeight="19.0" prefWidth="85.0" text="Director" />
+                     <Text layoutX="303.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Management Role:" wrappingWidth="106.13671875" />
+                     <RadioButton fx:id="manRB" layoutX="303.0" layoutY="166.0" prefHeight="18.0" prefWidth="84.0" text="Manager" />
+                     <RadioButton fx:id="dhRB" layoutX="389.0" layoutY="166.0" prefHeight="19.0" prefWidth="117.0" text="DepartmentHead" />
+                     <RadioButton fx:id="dirRB" layoutX="513.0" layoutY="166.0" prefHeight="19.0" prefWidth="85.0" text="Director" />
+
+                     <RadioButton fx:id="csRB" layoutX="303.0" layoutY="50.0" prefHeight="18.0" prefWidth="51.0" text="CS" />
+                     <RadioButton fx:id="eceRB" layoutX="389.0" layoutY="49.0" prefHeight="19.0" prefWidth="117.0" text="ECE" />
+                     <RadioButton fx:id="itRB" layoutX="513.0" layoutY="49.0" prefHeight="19.0" prefWidth="85.0" text="IT" />
 
 
 
