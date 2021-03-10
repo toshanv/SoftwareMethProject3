@@ -131,8 +131,6 @@ public class Controller {
         fullRB.setToggleGroup(employmentGroup);
         partRB.setToggleGroup(employmentGroup);
 
-
-
         hiredDate.setEditable(false);
         hiredDate.setPromptText("Select using calendar");
         name.setPromptText("Enter name");
