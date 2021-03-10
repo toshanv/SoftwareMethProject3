@@ -22,11 +22,10 @@ import java.io.IOException;
  * @author Toshanraju Vysyaraju
  */
 public class Controller {
+
     ObservableList <String> employmentStatusList = FXCollections.observableArrayList("Fulltime", "Parttime", "Management");
 
     ObservableList <String> departmentList = FXCollections.observableArrayList("CS", "IT", "ECE");
-
-    ObservableList <String> managementList = FXCollections.observableArrayList("Manager", "DepartmentHead", "Director");
 
     Company company = new Company();
 
@@ -51,9 +50,6 @@ public class Controller {
     private ChoiceBox departmentStatus = new ChoiceBox();
 
     @FXML
-    private ChoiceBox managementStatus = new ChoiceBox();
-
-    @FXML
     private DatePicker hiredDate = new DatePicker();
 
     @FXML
@@ -74,6 +70,18 @@ public class Controller {
     @FXML
     private Button addEmployeeButton = new Button();
 
+    @FXML
+    private RadioButton manRB = new RadioButton();
+
+    @FXML
+    private RadioButton dhRB = new RadioButton();
+
+    @FXML
+    private RadioButton dirRB = new RadioButton();
+
+    @FXML
+    private ToggleGroup rbGroup = new ToggleGroup();
+
     /**
      * Method used to initialize values for the department, employment, and management choice boxes.
      */
@@ -81,7 +89,12 @@ public class Controller {
     public void initialize () {
         employmentStatus.getItems().addAll(employmentStatusList);
         departmentStatus.getItems().addAll(departmentList);
-        managementStatus.getItems().addAll(managementList);
+        manRB.setUserData("Manager");
+        dhRB.setUserData("DepartmentHead");
+        dirRB.setUserData("Director");
+        manRB.setToggleGroup(rbGroup);
+        dirRB.setToggleGroup(rbGroup);
+        dhRB.setToggleGroup(rbGroup);
         hiredDate.setEditable(false);
         hiredDate.setPromptText("Select using calendar");
         name.setPromptText("Enter name");
@@ -143,11 +156,11 @@ public class Controller {
                     employmentStatus.setValue("Management");
                     annualSalary.setText(inputArr[INPUT_ARR_PAY_INDEX]);
                     if (inputArr[INPUT_ARR_MGMT_INDEX].equals("1")) {
-                        managementStatus.setValue("Manager");
+                        rbGroup.selectToggle(manRB);
                     } else if (inputArr[INPUT_ARR_MGMT_INDEX].equals("2")) {
-                        managementStatus.setValue("DepartmentHead");
+                        rbGroup.selectToggle(dhRB);
                     } else {
-                        managementStatus.setValue("Director");
+                        rbGroup.selectToggle(dirRB);
                     }
                 }
 
@@ -198,7 +211,9 @@ public class Controller {
         hourlyRate.clear();
         departmentStatus.setValue(null);
         employmentStatus.setValue(null);
-        managementStatus.setValue(null);
+        if (rbGroup.getSelectedToggle() != null) {
+            rbGroup.getSelectedToggle().setSelected(false);
+        }
         hiredDate.setValue(null);
     }
 
@@ -212,22 +227,30 @@ public class Controller {
             annualSalary.setDisable(true);
             hoursWorked.setDisable(false);
             hourlyRate.setDisable(false);
-            managementStatus.setDisable(true);
+            dhRB.setDisable(true);
+            dirRB.setDisable(true);
+            manRB.setDisable(true);
         } else if (employmentStatus.getValue() == "Fulltime" ) {
             annualSalary.setDisable(false);
             hoursWorked.setDisable(true);
             hourlyRate.setDisable(true);
-            managementStatus.setDisable(true);
+            dhRB.setDisable(true);
+            dirRB.setDisable(true);
+            manRB.setDisable(true);
         } else if (employmentStatus.getValue() == "Management") {
             annualSalary.setDisable(false);
             hoursWorked.setDisable(true);
             hourlyRate.setDisable(true);
-            managementStatus.setDisable(false);
+            dhRB.setDisable(false);
+            dirRB.setDisable(false);
+            manRB.setDisable(false);
         } else {
             annualSalary.setDisable(false);
             hoursWorked.setDisable(false);
             hourlyRate.setDisable(false);
-            managementStatus.setDisable(false);
+            dhRB.setDisable(false);
+            dirRB.setDisable(false);
+            manRB.setDisable(false);
         }
     }
 
@@ -315,14 +338,14 @@ public class Controller {
             } else {
                 int managementCode;
 
-                if (managementStatus.getValue() == null) {
+                if (rbGroup.getSelectedToggle()== null) {
                     textDisplay.appendText("Submission is not valid. Management Role is empty please fill out.\n");
                     return;
                 }
 
-                if (managementStatus.getValue().toString().equals("Manager")) {
+                if (rbGroup.getSelectedToggle().getUserData().toString().equals("Manager")) {
                     managementCode = MANAGER_CODE;
-                } else if (managementStatus.getValue().toString().equals("DepartmentHead")) {
+                } else if (rbGroup.getSelectedToggle().getUserData().toString().equals("DepartmentHead")) {
                     managementCode = DEPT_HEAD_CODE;
                 } else {
                     managementCode = DIRECTOR_CODE;
@@ -468,7 +491,7 @@ public class Controller {
         if (isUpdated) {
             textDisplay.appendText("Working hours set.\n");
         } else {
-            textDisplay.appendText("Employee does not exist.\n");
+            textDisplay.appendText("Parttime Employee with this profile does not exist.\n");
         }
 
         resetTab(actionEvent);

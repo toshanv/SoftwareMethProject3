@@ -26,7 +26,12 @@
                      <Text layoutX="322.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate:" wrappingWidth="74.13671112060547" />
                      <TextField fx:id="hourlyRate" layoutX="439.0" layoutY="193.0" prefHeight="27.0" prefWidth="148.0" />
                      <Text layoutX="322.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Management Role:" wrappingWidth="106.13671875" />
-                     <ChoiceBox fx:id="managementStatus" layoutX="438.0" layoutY="141.0" prefWidth="150.0" />
+                     <RadioButton fx:id="manRB" layoutX="449.0" layoutY="122.0" prefHeight="18.0" prefWidth="84.0" text="Manager" />
+                     <RadioButton fx:id="dhRB" layoutX="448.0" layoutY="143.0" prefHeight="19.0" prefWidth="117.0" text="DepartmentHead" />
+                     <RadioButton fx:id="dirRB" layoutX="448.0" layoutY="167.0" prefHeight="19.0" prefWidth="85.0" text="Director" />
+
+
+
                      <ButtonBar layoutX="14.0" layoutY="239.0" prefHeight="40.0" prefWidth="551.0">
                        <buttons>
                           <Button mnemonicParsing="false" onAction="#resetTab" prefHeight="26.0" prefWidth="283.0" text="Reset" />
